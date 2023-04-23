@@ -1,1 +1,1 @@
-# travel-app
+# react-native-app
