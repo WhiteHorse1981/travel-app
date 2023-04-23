@@ -1,22 +1,21 @@
-import React from 'react'
+import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import RegistrationScreen from './Screens/auth/RegistrationScreen.jsx'
-import LoginScreen from './Screens/auth/LoginScreen.jsx'
-import PostsScreen from './Screens/main/PostsScreen.jsx'
-import CreatePostsScreen from './Screens/main/CreatePostsScreen.jsx'
-import ProfileScreen from './Screens/main/ProfileScreen.jsx'
+import RegistrationScreen from './Screens/auth/RegistrationScreen.jsx';
+import LoginScreen from './Screens/auth/LoginScreen.jsx';
+import PostsScreen from './Screens/main/PostsScreen.jsx';
+import CreatePostsScreen from './Screens/main/CreatePostsScreen.jsx';
+import ProfileScreen from './Screens/main/ProfileScreen.jsx';
 
 // icons import
-import { AntDesign } from '@expo/vector-icons'
-import { Feather } from '@expo/vector-icons'
+import { AntDesign, Feather } from '@expo/vector-icons';
 
-const AuthStack = createStackNavigator()
-const MainTab = createBottomTabNavigator()
+const AuthStack = createStackNavigator();
+const MainTab = createBottomTabNavigator();
 
-export const useRoute = (isAuth) => {
+export const useRoute = isAuth => {
   if (!isAuth) {
     return (
       <AuthStack.Navigator initialRouteName="Login">
@@ -35,10 +34,16 @@ export const useRoute = (isAuth) => {
           component={LoginScreen}
         />
       </AuthStack.Navigator>
-    )
+    );
   }
   return (
-    <MainTab.Navigator>
+    <MainTab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarInactiveBackgroundColor: '#011f3b',
+        tabBarActiveBackgroundColor: '#032845',
+      }}
+    >
       <MainTab.Screen
         name="Posts"
         component={PostsScreen}
@@ -55,7 +60,7 @@ export const useRoute = (isAuth) => {
         component={CreatePostsScreen}
         options={{
           tabBarShowLabel: false,
-          title: 'Створити публікацію',
+          title: 'Create a post',
           headerTitleStyle: {
             color: '#212121',
             fontFamily: 'Roboto-Medium',
@@ -89,5 +94,5 @@ export const useRoute = (isAuth) => {
         }}
       />
     </MainTab.Navigator>
-  )
-}
+  );
+};

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -10,40 +10,34 @@ import {
   Dimensions,
   FlatList,
   SafeAreaView,
-} from 'react-native'
-import { useSelector } from 'react-redux'
-import db from '../../firebase/config'
-import { AntDesign } from '@expo/vector-icons'
+} from 'react-native';
+import { useSelector } from 'react-redux';
+import db from '../../firebase/config';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function CommentsScreen({ route }) {
-  const [comment, setComment] = useState('')
-  const [allComments, setAllComments] = useState([])
-  const { postId } = route.params
-  const { photo } = useSelector((state) => state.auth)
+  const [comment, setComment] = useState('');
+  const [allComments, setAllComments] = useState([]);
+  const { postId } = route.params;
+  const { photo } = useSelector(state => state.auth);
 
   useEffect(() => {
-    getAllComments()
-  }, [])
+    getAllComments();
+  }, []);
 
   const createComment = async () => {
-    db.firestore()
-      .collection('posts')
-      .doc(postId)
-      .collection('comments')
-      .add({ comment, photo })
+    db.firestore().collection('posts').doc(postId).collection('comments').add({ comment, photo });
 
-    setComment('')
-  }
+    setComment('');
+  };
 
   const getAllComments = async () => {
     db.firestore()
       .collection('posts')
       .doc(postId)
       .collection('comments')
-      .onSnapshot((data) =>
-        setAllComments(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-      )
-  }
+      .onSnapshot(data => setAllComments(data.docs.map(doc => ({ ...doc.data(), id: doc.id }))));
+  };
 
   return (
     <View style={styles.container}>
@@ -64,19 +58,17 @@ export default function CommentsScreen({ route }) {
               </View>
             </View>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
         />
       </SafeAreaView>
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      >
+      <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
         <View style={{ marginTop: 6, marginHorizontal: 16 }}>
           <TextInput
             value={comment}
-            onChangeText={(value) => setComment(value)}
+            onChangeText={value => setComment(value)}
             style={styles.comment}
-            placeholder="Коментувати..."
+            placeholder="Сomment..."
             placeholderTextColor="#BDBDBD"
           />
 
@@ -86,7 +78,7 @@ export default function CommentsScreen({ route }) {
         </View>
       </KeyboardAvoidingView>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -152,4 +144,4 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: '#212121',
   },
-})
+});

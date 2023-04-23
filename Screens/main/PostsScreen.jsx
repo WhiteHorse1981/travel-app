@@ -1,30 +1,30 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 // import db from '../../firebase/config'
-import Home from '../nestedScreens/Home'
-import CommentsScreen from '../nestedScreens/CommentsScreen'
-import MapScreen from '../nestedScreens/MapScreen'
-import { TouchableOpacity } from 'react-native'
-import { Feather } from '@expo/vector-icons'
-import { authSignOutUser } from '../../redux/auth/authOperations'
-import { useDispatch } from 'react-redux'
-import { AntDesign } from '@expo/vector-icons'
+import Home from '../nestedScreens/Home';
+import CommentsScreen from '../nestedScreens/CommentsScreen';
+import MapScreen from '../nestedScreens/MapScreen';
+import { TouchableOpacity } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { authSignOutUser } from '../../redux/auth/authOperations';
+import { useDispatch } from 'react-redux';
+import { AntDesign } from '@expo/vector-icons';
 
-const NestedScreen = createStackNavigator()
+const NestedScreen = createStackNavigator();
 
 export default function PostsScreen({ navigation }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const signOut = () => {
-    dispatch(authSignOutUser())
-  }
+    dispatch(authSignOutUser());
+  };
   return (
     <NestedScreen.Navigator>
       <NestedScreen.Screen
         name="Home"
         component={Home}
         options={{
-          title: 'Публікації',
+          title: 'Posts',
           headerTitleStyle: {
             color: '#212121',
             fontFamily: 'Roboto-Medium',
@@ -44,28 +44,20 @@ export default function PostsScreen({ navigation }) {
         name="Comments"
         component={CommentsScreen}
         options={{
-          title: 'Коментарі',
+          title: 'Comments',
           headerLeft: () => (
             <TouchableOpacity
               style={{ marginLeft: 16 }}
               onPress={() => {
-                navigation.navigate('Home')
+                navigation.navigate('Home');
               }}
             >
-              <AntDesign
-                name="arrowleft"
-                size={24}
-                color="rgba(33, 33, 33, 0.8)"
-              />
+              <AntDesign name="arrowleft" size={24} color="rgba(33, 33, 33, 0.8)" />
             </TouchableOpacity>
           ),
         }}
       />
-      <NestedScreen.Screen
-        name="Map"
-        component={MapScreen}
-        options={{ title: 'Місцезнаходження' }}
-      />
+      <NestedScreen.Screen name="Map" component={MapScreen} options={{ title: 'Location' }} />
     </NestedScreen.Navigator>
-  )
+  );
 }

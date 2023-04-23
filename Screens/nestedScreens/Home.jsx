@@ -1,35 +1,26 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  Image,
-  TouchableOpacity,
-} from 'react-native'
-import db from '../../firebase/config'
-import { Feather } from '@expo/vector-icons'
+import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import db from '../../firebase/config';
+import { Feather } from '@expo/vector-icons';
 
 export default function Home({ route, navigation }) {
-  const [posts, setPosts] = useState([])
-  const { email, photo, login } = useSelector((state) => state.auth)
+  const [posts, setPosts] = useState([]);
+  const { email, photo, login } = useSelector(state => state.auth);
 
-  console.log('route.params', route.params)
+  console.log('route.params', route.params);
 
   const getAllPosts = async () => {
     await db
       .firestore()
       .collection('posts')
-      .onSnapshot((data) =>
-        setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-      )
-  }
+      .onSnapshot(data => setPosts(data.docs.map(doc => ({ ...doc.data(), id: doc.id }))));
+  };
 
   useEffect(() => {
-    getAllPosts()
-  }, [])
+    getAllPosts();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -47,7 +38,7 @@ export default function Home({ route, navigation }) {
           <>
             <View style={{ marginTop: 32 }}>
               <Image source={{ uri: item.photo }} style={styles.img} />
-              <Text style={styles.title}>{item.title.value}</Text>
+              <Text style={styles.title}>{item.title}</Text>
             </View>
             <View style={styles.wraper}>
               <TouchableOpacity
@@ -72,7 +63,7 @@ export default function Home({ route, navigation }) {
                   }
                 >
                   <Feather name="map-pin" size={24} color="#BDBDBD" />
-                  <Text style={styles.place}>{item.place.value}</Text>
+                  <Text style={styles.place}>{item.place}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -80,7 +71,7 @@ export default function Home({ route, navigation }) {
         )}
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -156,4 +147,4 @@ const styles = StyleSheet.create({
 
     color: '#212121',
   },
-})
+});

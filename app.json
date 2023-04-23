@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Roma Shulga social-network",
-    "slug": "roman-shulga-social-network",
+    "name": "Travel App",
+    "slug": "travel-app",
     "privacy": "public",
-    "description": "Social network for sharing photos",
+    "description": "Travel App",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "default",

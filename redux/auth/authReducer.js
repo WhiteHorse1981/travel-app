@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-import NativeAsyncLocalStorage from 'react-native/Libraries/Storage/NativeAsyncLocalStorage'
+import { createSlice } from '@reduxjs/toolkit';
+import NativeAsyncLocalStorage from 'react-native/Libraries/Storage/NativeAsyncLocalStorage';
 
 const state = {
   userId: null,
@@ -7,7 +7,7 @@ const state = {
   email: '',
   stateChange: false,
   photo: null,
-}
+};
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -26,4 +26,4 @@ export const authSlice = createSlice({
     }),
     authSignOut: () => state,
   },
-})
+});

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,42 +10,38 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
-} from 'react-native'
-import { StatusBar } from 'expo-status-bar'
-import { useDispatch } from 'react-redux'
-import { authSignInUser } from '../../redux/auth/authOperations'
+} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { authSignInUser } from '../../redux/auth/authOperations';
 
 const initialState = {
   email: '',
   password: '',
-}
+};
 
 export default function LoginScreen({ navigation }) {
-  const [isShowKeyboard, setIsShowKeyboard] = useState(false)
-  const [state, setState] = useState(initialState)
-  const [isPasswordSecure, setIsPasswordSecure] = useState(true)
+  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [state, setState] = useState(initialState);
+  const [isPasswordSecure, setIsPasswordSecure] = useState(true);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const login = () => {
-    setIsShowKeyboard(false)
-    Keyboard.dismiss()
-    dispatch(authSignInUser(state))
-    setState(initialState)
-  }
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+    dispatch(authSignInUser(state));
+    setState(initialState);
+  };
 
   const keyboardHide = () => {
-    setIsShowKeyboard(false)
-    Keyboard.dismiss()
-  }
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+  };
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
-        <ImageBackground
-          source={require('../../assets/img/photo-bg.jpg')}
-          style={styles.image}
-        >
+        <ImageBackground source={require('../../assets/img/photo-bg.jpg')} style={styles.image}>
           <View
             style={{
               ...Platform.select({
@@ -60,62 +56,55 @@ export default function LoginScreen({ navigation }) {
               }),
             }}
           >
-            <KeyboardAvoidingView
-              behavior={Platform.OS == 'ios' ? 'padding' : ''}
-            >
-              <Text style={styles.title}>Вхід</Text>
+            <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : ''}>
+              <Text style={styles.title}>Login</Text>
 
               <TextInput
                 value={state.email}
                 style={styles.input}
-                placeholder="Адреса електронної пошти"
+                placeholder="E-mail address"
                 onFocus={() => {
-                  setIsShowKeyboard(true)
+                  setIsShowKeyboard(true);
                 }}
-                onChangeText={(value) => {
-                  setState((prev) => ({ ...prev, email: value }))
+                onChangeText={value => {
+                  setState(prev => ({ ...prev, email: value }));
                 }}
               />
               <View style={{ position: 'relative' }}>
                 <TextInput
                   value={state.password}
                   style={styles.input}
-                  placeholder="Пароль"
+                  placeholder="Password"
                   secureTextEntry={isPasswordSecure}
                   onFocus={() => {
-                    setIsShowKeyboard(true)
+                    setIsShowKeyboard(true);
                   }}
-                  onChangeText={(value) => {
-                    setState((prev) => ({ ...prev, password: value }))
+                  onChangeText={value => {
+                    setState(prev => ({ ...prev, password: value }));
                   }}
                 />
                 <Text
                   onPress={() => {
-                    setIsPasswordSecure(!isPasswordSecure)
+                    setIsPasswordSecure(!isPasswordSecure);
                   }}
                   style={styles.showPassword}
                 >
-                  {isPasswordSecure ? 'Показати' : 'Приховати'}
+                  {isPasswordSecure ? 'Hide' : 'Show'}
                 </Text>
               </View>
 
               <TouchableOpacity style={styles.btn} onPress={login}>
-                <Text style={styles.btnText}>Увійти</Text>
+                <Text style={styles.btnText}>Login</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Registration')}
-              >
-                <Text style={styles.login}>
-                  Немає аккаунту? Зареєструватися
-                </Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
+                <Text style={styles.login}>Don't have an account? Register</Text>
               </TouchableOpacity>
             </KeyboardAvoidingView>
           </View>
         </ImageBackground>
-        {/* <StatusBar style="auto" /> */}
       </View>
     </TouchableWithoutFeedback>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -191,4 +180,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
   },
-})
+});
