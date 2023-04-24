@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import NativeAsyncLocalStorage from 'react-native/Libraries/Storage/NativeAsyncLocalStorage';
 
 const state = {
   userId: null,
-  login: null,
+  login: '',
   email: '',
   stateChange: false,
   photo: null,

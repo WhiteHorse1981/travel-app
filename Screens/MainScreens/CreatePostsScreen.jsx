@@ -48,11 +48,15 @@ export default function CreatePostsScreen({ navigation }) {
   };
 
   const sendData = () => {
-    uploadPostToServer();
-    navigation.navigate('Home');
-    setPhoto('');
-    setTitle('');
-    setPlace('');
+    if (title.trim() && place.trim()) {
+      uploadPostToServer();
+      navigation.navigate('Home');
+      setPhoto('');
+      setTitle('');
+      setPlace('');
+    } else {
+      Alert.alert('Please fill in the fields');
+    }
   };
 
   const uploadPostToServer = async () => {
@@ -80,52 +84,46 @@ export default function CreatePostsScreen({ navigation }) {
     return processedPhoto;
   };
 
-  const keyboardHide = () => {
-    setIsShowKeyboard(false);
-    Keyboard.dismiss();
-  };
-
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <Camera style={styles.camera} ref={setCamera} type={CameraType.back}>
-          {photo && (
-            <View style={styles.takePhotoContainer}>
-              <Image source={{ uri: photo }} style={styles.photo} />
-            </View>
-          )}
-          {!photo && (
-            <TouchableOpacity onPress={takePhoto} style={styles.snap}>
-              <FontAwesome name="camera" size={24} color="#BDBDBD" />
-            </TouchableOpacity>
-          )}
-          {photo && (
-            <TouchableOpacity
-              onPress={() => {
-                setPhoto('');
-              }}
-              style={{
-                width: 60,
-                height: 60,
-                borderRadius: 50,
-                backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <FontAwesome name="camera" size={24} color="#FFFFFF" />
-            </TouchableOpacity>
-          )}
-        </Camera>
+        <View style={styles.cameraContainer}>
+          <Camera style={styles.camera} ref={setCamera} type={CameraType.back}>
+            {photo && (
+              <View style={styles.takePhotoContainer}>
+                <Image source={{ uri: photo }} style={styles.photo} />
+              </View>
+            )}
+            {!photo ? (
+              <TouchableOpacity onPress={takePhoto} style={styles.snap}>
+                <FontAwesome name="camera" size={24} color="#BDBDBD" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  setPhoto('');
+                }}
+                style={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: 50,
+                  backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <FontAwesome name="camera" size={24} color="#FFFFFF" />
+              </TouchableOpacity>
+            )}
+          </Camera>
+        </View>
         <Text style={styles.text}>{!photo ? 'Upload a photo' : 'Edit photo'}</Text>
         <View>
           <TextInput
             style={styles.title}
             placeholder={'Name...'}
             value={title}
-            onChangeText={value => {
-              setTitle(prev => ({ ...prev, value }));
-            }}
+            onChangeText={setTitle}
             onFocus={() => {
               setIsShowKeyboard(true);
             }}
@@ -134,14 +132,12 @@ export default function CreatePostsScreen({ navigation }) {
             style={styles.place}
             placeholder={'Terrain...'}
             value={place}
-            onChangeText={value => {
-              setPlace(prev => ({ ...prev, value }));
-            }}
+            onChangeText={setPlace}
             onFocus={() => {
               setIsShowKeyboard(true);
             }}
           />
-          <View style={{ position: 'absolute', top: 65, left: 16 }}>
+          <View style={{ position: 'absolute', top: 80, left: 16 }}>
             <Feather name="map-pin" size={24} color="#BDBDBD" />
           </View>
         </View>
@@ -158,16 +154,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
+  cameraContainer: {
+    borderRadius: 8,
+  },
   camera: {
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
     height: 240,
     marginHorizontal: 16,
     marginTop: 32,
     borderColor: '#E8E8E8',
     borderWidth: 1,
     borderRadius: 8,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   snap: {
     width: 60,
@@ -182,8 +181,8 @@ const styles = StyleSheet.create({
   },
   photo: {
     height: 240,
-    width: Dimensions.get('window').width - 32,
     borderRadius: 8,
+    width: Dimensions.get('window').width - 32,
   },
   text: {
     color: '#BDBDBD',

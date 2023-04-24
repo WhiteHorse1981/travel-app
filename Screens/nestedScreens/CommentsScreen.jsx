@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   boxComment: {
-    display: 'flex',
     flexDirection: 'row',
     marginHorizontal: 16,
     marginTop: 24,

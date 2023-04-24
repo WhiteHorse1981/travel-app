@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Text,
   View,
@@ -8,41 +8,36 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
-} from 'react-native'
-import db from '../../firebase/config'
-import { Feather } from '@expo/vector-icons'
-import { FontAwesome } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons'
-import { authSignOutUser } from '../../redux/auth/authOperations'
+} from 'react-native';
+import db from '../../firebase/config';
+import { Feather } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { authSignOutUser } from '../../redux/auth/authOperations';
 
 export default function ProfileScreen({ navigation }) {
-  const [posts, setPosts] = useState([])
-  const { userId, photo, login } = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
+  const [posts, setPosts] = useState([]);
+  const { userId, photo, login } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
   const getUsersPost = async () => {
     await db
       .firestore()
       .collection('posts')
       .where('userId', '==', userId)
-      .onSnapshot((data) =>
-        setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-      )
-  }
+      .onSnapshot(data => setPosts(data.docs.map(doc => ({ ...doc.data(), id: doc.id }))));
+  };
 
   useEffect(() => {
-    getUsersPost()
-  }, [])
+    getUsersPost();
+  }, []);
 
   const signOut = () => {
-    dispatch(authSignOutUser())
-  }
+    dispatch(authSignOutUser());
+  };
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('../../assets/img/photo-bg.jpg')}
-        style={styles.image}
-      >
+      <ImageBackground source={require('../../assets/images/PhotoBCG.jpg')} style={styles.image}>
         <View style={styles.box}>
           <TouchableOpacity style={styles.out} onPress={signOut}>
             <Feather name="log-out" size={24} color="#BDBDBD" />
@@ -50,7 +45,7 @@ export default function ProfileScreen({ navigation }) {
           <View
             style={{
               position: 'absolute',
-              top: -60,
+              top: -30,
               left: '35%',
             }}
           >
@@ -67,7 +62,7 @@ export default function ProfileScreen({ navigation }) {
                   <Text style={styles.title}>{item.title.value}</Text>
                 </View>
                 <View style={styles.wraper}>
-                  <View style={{ display: 'flex', flexDirection: 'row' }}>
+                  <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity
                       style={styles.comments}
                       onPress={() =>
@@ -80,22 +75,14 @@ export default function ProfileScreen({ navigation }) {
                       <FontAwesome name="comment" size={24} color="#FF6C00" />
                       <Text style={styles.commentsCount}>0</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{ ...styles.comments, marginLeft: 24 }}
-                      // onPress={() =>
-                      //   navigation.navigate('Comments', {
-                      //     postId: item.id,
-                      //     photo: item.photo,
-                      //   })
-                      // }
-                    >
+                    <TouchableOpacity style={{ ...styles.comments, marginLeft: 24 }}>
                       <AntDesign name="like2" size={24} color="#FF6C00" />
                       <Text style={styles.commentsCount}>0</Text>
                     </TouchableOpacity>
                   </View>
                   <View>
                     <TouchableOpacity
-                      style={{ display: 'flex', flexDirection: 'row' }}
+                      style={{ flexDirection: 'row' }}
                       onPress={() =>
                         navigation.navigate('Map', {
                           location: item.location,
@@ -113,7 +100,7 @@ export default function ProfileScreen({ navigation }) {
         </View>
       </ImageBackground>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -163,13 +150,11 @@ const styles = StyleSheet.create({
     color: '#212121',
   },
   wraper: {
-    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 16,
   },
   comments: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -192,6 +177,6 @@ const styles = StyleSheet.create({
   avatar: {
     width: 120,
     height: 120,
-    borderRadius: 16,
+    borderRadius: 8,
   },
-})
+});

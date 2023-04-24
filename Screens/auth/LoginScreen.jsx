@@ -33,25 +33,20 @@ export default function LoginScreen({ navigation }) {
     setState(initialState);
   };
 
-  const keyboardHide = () => {
-    setIsShowKeyboard(false);
-    Keyboard.dismiss();
-  };
-
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <ImageBackground source={require('../../assets/img/photo-bg.jpg')} style={styles.image}>
+        <ImageBackground source={require('../../assets/images/PhotoBCG.jpg')} style={styles.image}>
           <View
             style={{
               ...Platform.select({
                 ios: {
                   ...styles.form,
-                  marginBottom: isShowKeyboard ? 180 : 0,
+                  marginBottom: isShowKeyboard ? 140 : 0,
                 },
                 android: {
                   ...styles.form,
-                  paddingBottom: isShowKeyboard ? 0 : 140,
+                  paddingBottom: isShowKeyboard ? 0 : 50,
                 },
               }),
             }}
@@ -97,7 +92,9 @@ export default function LoginScreen({ navigation }) {
                 <Text style={styles.btnText}>Login</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
-                <Text style={styles.login}>Don't have an account? Register</Text>
+                <Text style={styles.login}>
+                  Don't have an account? <Text style={styles.textRegister}>Register</Text>
+                </Text>
               </TouchableOpacity>
             </KeyboardAvoidingView>
           </View>
@@ -147,6 +144,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: '#212121',
+  },
+  textRegister: {
+    color: 'red',
+    fontWeight: '600',
   },
   btn: {
     backgroundColor: '#FF6C00',

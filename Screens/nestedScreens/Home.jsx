@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import db from '../../firebase/config';
@@ -38,6 +38,8 @@ export default function Home({ route, navigation }) {
           <>
             <View style={{ marginTop: 32 }}>
               <Image source={{ uri: item.photo }} style={styles.img} />
+            </View>
+            <View style={styles.titleContainer}>
               <Text style={styles.title}>{item.title}</Text>
             </View>
             <View style={styles.wraper}>
@@ -55,7 +57,7 @@ export default function Home({ route, navigation }) {
               </TouchableOpacity>
               <View>
                 <TouchableOpacity
-                  style={{ display: 'flex', flexDirection: 'row' }}
+                  style={{ flexDirection: 'row' }}
                   onPress={() =>
                     navigation.navigate('Map', {
                       location: item.location,
@@ -81,7 +83,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   info: {
-    display: 'flex',
     flexDirection: 'row',
     marginLeft: 16,
     marginTop: 32,
@@ -92,6 +93,10 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 16,
     marginRight: 8,
+  },
+  titleContainer: {
+    marginHorizontal: 16,
+    marginTop: 8,
   },
   login: {
     fontFamily: 'Roboto-Bold',
@@ -121,13 +126,11 @@ const styles = StyleSheet.create({
     color: '#212121',
   },
   wraper: {
-    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 16,
   },
   comments: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },

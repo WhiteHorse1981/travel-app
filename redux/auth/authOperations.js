@@ -4,16 +4,16 @@ import { authSlice } from './authReducer';
 const { updateUserProfile, authSignOut, authStateChange } = authSlice.actions;
 
 export const authSignUpUser =
-  ({ login, email, password, photo = '' }) =>
+  ({ login, mail, password, photo = '' }) =>
   async (dispatch, getState) => {
     try {
-      await db.auth().createUserWithEmailAndPassword(email, password);
+      await db.auth().createUserWithEmailAndPassword(mail, password);
 
       const user = await db.auth().currentUser;
 
       await user.updateProfile({
         displayName: login,
-        email: email,
+        email: mail,
         photoURL: photo,
       });
 
@@ -27,8 +27,8 @@ export const authSignUpUser =
       };
 
       dispatch(updateUserProfile(userUpdateProfile));
-    } catch (err) {
-      console.log('err', err.message);
+    } catch (error) {
+      console.log('error', error.message);
     }
   };
 
@@ -37,8 +37,8 @@ export const authSignInUser =
   async (dispatch, getState) => {
     try {
       const user = await db.auth().signInWithEmailAndPassword(email, password);
-    } catch (err) {
-      console.log('err', err.message);
+    } catch (error) {
+      console.log('error', error.message);
     }
   };
 
@@ -47,8 +47,8 @@ export const authSignOutUser = () => async (dispatch, getState) => {
     await db.auth().signOut();
 
     dispatch(authSignOut());
-  } catch (err) {
-    console.log('err', err.message);
+  } catch (error) {
+    console.log('error', error.message);
   }
 };
 
@@ -66,7 +66,7 @@ export const authStateChangeUser = () => async (dispatch, getState) => {
         dispatch(updateUserProfile(userUpdateProfile));
       }
     });
-  } catch (err) {
-    console.log('err', err.message);
+  } catch (error) {
+    console.log('error', error.message);
   }
 };

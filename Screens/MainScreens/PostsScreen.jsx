@@ -33,6 +33,7 @@ export default function PostsScreen({ navigation }) {
             letterSpacing: -0.408,
             background: '#FFFFFF',
           },
+          headerTitleAlign: 'center',
           headerRight: () => (
             <TouchableOpacity style={{ marginRight: 16 }} onPress={signOut}>
               <Feather name="log-out" size={24} color="#BDBDBD" />

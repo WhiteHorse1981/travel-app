@@ -5,12 +5,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import RegistrationScreen from './Screens/auth/RegistrationScreen.jsx';
 import LoginScreen from './Screens/auth/LoginScreen.jsx';
-import PostsScreen from './Screens/main/PostsScreen.jsx';
-import CreatePostsScreen from './Screens/main/CreatePostsScreen.jsx';
-import ProfileScreen from './Screens/main/ProfileScreen.jsx';
+import PostsScreen from './Screens/MainScreens/PostsScreen.jsx';
+import CreatePostsScreen from './Screens/MainScreens/CreatePostsScreen.jsx';
+import ProfileScreen from './Screens/MainScreens/ProfileScreen.jsx';
 
 // icons import
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { AntDesign, Feather, Ionicons } from '@expo/vector-icons';
 
 const AuthStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
@@ -48,10 +48,15 @@ export const useRoute = isAuth => {
         name="Posts"
         component={PostsScreen}
         options={{
+          tabBarLabel: 'Posts',
           headerShown: false,
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused, size, color }) => (
-            <Feather name="grid" size={24} color="rgba(33, 33, 33, 0.8)" />
+          tabBarIcon: ({ focused, color, size }) => (
+            <AntDesign
+              name="appstore-o"
+              size={focused ? 28 : 24}
+              color={focused ? '#FF6C00' : '#4D4D4D'}
+            />
           ),
         }}
       />
@@ -59,27 +64,17 @@ export const useRoute = isAuth => {
         name="CreatePosts"
         component={CreatePostsScreen}
         options={{
-          tabBarShowLabel: false,
-          title: 'Create a post',
+          tabBarLabel: 'CreatePosts',
           headerTitleStyle: {
             color: '#212121',
-            fontFamily: 'Roboto-Medium',
             fontSize: 17,
             lineHeight: 22,
-            letterSpacing: -0.408,
-            background: '#FFFFFF',
           },
-          tabBarIcon: ({ focused, size, color }) => (
-            <AntDesign name="plus" size={13} color="#FFFFFF" />
+          tabBarShowLabel: false,
+          headerTitleAlign: 'center',
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons name="add" size={focused ? 32 : 24} color={focused ? '#FF6C00' : '#4D4D4D'} />
           ),
-          tabBarIconStyle: {
-            display: 'block',
-            width: 70,
-            height: 40,
-            backgroundColor: '#FF6C00',
-            borderRadius: 20,
-            marginTop: 9,
-          },
         }}
       />
       <MainTab.Screen
@@ -89,7 +84,7 @@ export const useRoute = isAuth => {
           tabBarShowLabel: false,
           headerShown: false,
           tabBarIcon: ({ focused, size, color }) => (
-            <Feather name="user" size={24} color="rgba(33, 33, 33, 0.8)" />
+            <Feather name="user" size={focused ? 28 : 24} color={focused ? '#FF6C00' : '#4D4D4D'} />
           ),
         }}
       />

@@ -21,10 +21,10 @@ import { useDispatch } from 'react-redux';
 import { authSignUpUser } from '../../redux/auth/authOperations';
 
 const initialState = {
-  email: '',
-  password: '',
-  login: '',
   photo: '',
+  login: '',
+  mail: '',
+  password: '',
 };
 
 export default function RegistrationScreen({ navigation }) {
@@ -41,33 +41,27 @@ export default function RegistrationScreen({ navigation }) {
     setState(prev => ({ ...prev, photo: photo.uri }));
   };
 
-  const registration = () => {
+  const handleSubmit = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log(state);
     dispatch(authSignUpUser(state));
     setState(initialState);
   };
 
-  const keyboardHide = () => {
-    setIsShowKeyboard(false);
-    Keyboard.dismiss();
-  };
-
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <ImageBackground source={require('../../assets/img/photo-bg.jpg')} style={styles.image}>
+        <ImageBackground source={require('../../assets/images/PhotoBCG.jpg')} style={styles.image}>
           <View
             style={{
               ...Platform.select({
                 ios: {
                   ...styles.form,
-                  marginBottom: isShowKeyboard ? 180 : 0,
+                  marginBottom: isShowKeyboard ? 140 : 0,
                 },
                 android: {
                   ...styles.form,
-                  paddingBottom: isShowKeyboard ? 0 : 78,
+                  paddingBottom: isShowKeyboard ? 0 : 50,
                 },
               }),
             }}
@@ -90,8 +84,8 @@ export default function RegistrationScreen({ navigation }) {
                 }}
                 style={{
                   position: 'absolute',
-                  bottom: 545,
-                  right: 130,
+                  bottom: 520,
+                  right: 125,
                   width: 24,
                   height: 24,
                   backgroundColor: '#ffffff',
@@ -108,8 +102,10 @@ export default function RegistrationScreen({ navigation }) {
               <TouchableOpacity
                 style={{
                   position: 'absolute',
-                  bottom: 545,
-                  right: 130,
+                  bottom: 520,
+                  right: 125,
+                  backgroundColor: '#ffffff',
+                  borderRadius: 50,
                 }}
                 onPress={takePhoto}
               >
@@ -130,14 +126,14 @@ export default function RegistrationScreen({ navigation }) {
                 }}
               />
               <TextInput
-                value={state.email}
+                value={state.mail}
                 style={styles.input}
                 placeholder="E-mail address"
                 onFocus={() => {
                   setIsShowKeyboard(true);
                 }}
                 onChangeText={value => {
-                  setState(prev => ({ ...prev, email: value }));
+                  setState(prev => ({ ...prev, mail: value }));
                 }}
               />
               <View style={{ position: 'relative' }}>
@@ -163,17 +159,18 @@ export default function RegistrationScreen({ navigation }) {
                 </Text>
               </View>
 
-              <TouchableOpacity style={styles.btn} onPress={registration}>
+              <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
                 <Text style={styles.btnText}>Register</Text>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.login}>Already have an account? Login</Text>
+                <Text style={styles.login}>
+                  Already have an account? <Text style={styles.textLogin}>Login</Text>
+                </Text>
               </TouchableOpacity>
             </KeyboardAvoidingView>
           </View>
         </ImageBackground>
-        {/* <StatusBar style="auto" /> */}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -196,7 +193,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     paddingTop: 92,
     paddingBottom: 78,
-    // height: 549,
   },
   cameraContainer: {
     position: 'absolute',
@@ -204,8 +200,13 @@ const styles = StyleSheet.create({
     left: '35%',
     width: 120,
     height: 120,
+    backgroundColor: '#F6F6F6',
     overflow: 'hidden',
-    borderRadius: 16,
+    borderRadius: 8,
+  },
+  textLogin: {
+    color: 'red',
+    fontWeight: '600',
   },
   camera: {
     width: 120,
@@ -229,6 +230,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#F6F6F6',
+
     marginHorizontal: 16,
     marginTop: 16,
     padding: 16,
