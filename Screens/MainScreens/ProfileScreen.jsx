@@ -45,7 +45,7 @@ export default function ProfileScreen({ navigation }) {
           <View
             style={{
               position: 'absolute',
-              top: -30,
+              top: '6%',
               left: '35%',
             }}
           >
@@ -59,7 +59,7 @@ export default function ProfileScreen({ navigation }) {
               <View style={{ marginBottom: 32 }}>
                 <View>
                   <Image source={{ uri: item.photo }} style={styles.img} />
-                  <Text style={styles.title}>{item.title.value}</Text>
+                  <Text style={styles.title}>{item.title}</Text>
                 </View>
                 <View style={styles.wraper}>
                   <View style={{ flexDirection: 'row' }}>
@@ -123,9 +123,10 @@ const styles = StyleSheet.create({
   out: {
     alignItems: 'flex-end',
     marginRight: 16,
+    marginTop: 50,
   },
   login: {
-    marginTop: 46,
+    marginTop: 65,
     marginBottom: 33,
     textAlign: 'center',
     fontFamily: 'Roboto-Medium',

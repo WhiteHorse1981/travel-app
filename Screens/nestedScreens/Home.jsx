@@ -9,13 +9,17 @@ export default function Home({ route, navigation }) {
   const [posts, setPosts] = useState([]);
   const { email, photo, login } = useSelector(state => state.auth);
 
-  console.log('route.params', route.params);
+  console.log('route?.params', route?.params);
 
   const getAllPosts = async () => {
-    await db
-      .firestore()
-      .collection('posts')
-      .onSnapshot(data => setPosts(data.docs.map(doc => ({ ...doc.data(), id: doc.id }))));
+    try {
+      await db
+        .firestore()
+        .collection('posts')
+        .onSnapshot(data => setPosts(data.docs.map(doc => ({ ...doc.data(), id: doc.id }))));
+    } catch (error) {
+      console.log('error', error.message);
+    }
   };
 
   useEffect(() => {
@@ -46,10 +50,7 @@ export default function Home({ route, navigation }) {
               <TouchableOpacity
                 style={styles.comments}
                 onPress={() =>
-                  navigation.navigate('Comments', {
-                    postId: item.id,
-                    photo: item.photo,
-                  })
+                  navigation.navigate('Comments', { postId: item.id, photo: item.photo })
                 }
               >
                 <Feather name="message-circle" size={24} color="#BDBDBD" />
@@ -86,12 +87,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 16,
     marginTop: 32,
+    marginBottom: 10,
     alignItems: 'center',
   },
   avatar: {
     width: 60,
     height: 60,
-    borderRadius: 16,
+    borderRadius: 8,
     marginRight: 8,
   },
   titleContainer: {

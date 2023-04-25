@@ -46,6 +46,7 @@ export default function PostsScreen({ navigation }) {
         component={CommentsScreen}
         options={{
           title: 'Comments',
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <TouchableOpacity
               style={{ marginLeft: 16 }}

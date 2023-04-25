@@ -26,17 +26,24 @@ export default function CommentsScreen({ route }) {
   }, []);
 
   const createComment = async () => {
-    db.firestore().collection('posts').doc(postId).collection('comments').add({ comment, photo });
-
-    setComment('');
+    try {
+      db.firestore().collection('posts').doc(postId).collection('comments').add({ comment, photo });
+      setComment('');
+    } catch (error) {
+      console.log('error', error.message);
+    }
   };
 
   const getAllComments = async () => {
-    db.firestore()
-      .collection('posts')
-      .doc(postId)
-      .collection('comments')
-      .onSnapshot(data => setAllComments(data.docs.map(doc => ({ ...doc.data(), id: doc.id }))));
+    try {
+      db.firestore()
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .onSnapshot(data => setAllComments(data.docs.map(doc => ({ ...doc.data(), id: doc.id }))));
+    } catch (error) {
+      console.log('error', error.message);
+    }
   };
 
   return (
@@ -111,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF6C00',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '50%',
+    borderRadius: 50,
   },
   list: {
     marginBottom: 32,
@@ -125,7 +132,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
     width: 28,
     height: 28,
-    borderRadius: '50%',
+    borderRadius: 50,
   },
   boxText: {
     paddingHorizontal: 16,

@@ -215,12 +215,10 @@ const styles = StyleSheet.create({
   photo: {
     width: 120,
     height: 120,
-    borderRadius: 16,
+    borderRadius: 8,
   },
   title: {
     marginBottom: 16,
-    // marginTop: 92,
-
     fontFamily: 'Roboto-Medium',
     fontSize: 30,
     lineHeight: 35,

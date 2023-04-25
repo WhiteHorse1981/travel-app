@@ -10,6 +10,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
 
 import { Camera, CameraType } from 'expo-camera';
@@ -60,28 +61,41 @@ export default function CreatePostsScreen({ navigation }) {
   };
 
   const uploadPostToServer = async () => {
-    const photo = await uploadPhotoToServer();
-    const createPost = await db.firestore().collection('posts').add({
-      photo,
-      title,
-      location: location.coords,
-      place,
-      userId,
-      login,
-    });
+    try {
+      const photo = await uploadPhotoToServer();
+      const createPost = await db.firestore().collection('posts').add({
+        photo,
+        title,
+        location,
+        // location: location?.coords,
+        place,
+        userId,
+        login,
+      });
+    } catch (error) {
+      console.log('error', error.message);
+    }
   };
 
   const uploadPhotoToServer = async () => {
-    const response = await fetch(photo);
-    const file = await response.blob();
+    try {
+      const response = await fetch(photo);
+      const file = await response.blob();
 
-    const uniquePostId = nanoid();
+      const uniquePostId = nanoid();
 
-    await db.storage().ref(`postImage/${uniquePostId}`).put(file);
+      await db.storage().ref(`postImage/${uniquePostId}`).put(file);
 
-    const processedPhoto = await db.storage().ref('postImage').child(uniquePostId).getDownloadURL();
+      const processedPhoto = await db
+        .storage()
+        .ref('postImage')
+        .child(uniquePostId)
+        .getDownloadURL();
 
-    return processedPhoto;
+      return processedPhoto;
+    } catch (error) {
+      console.log('error', error.message);
+    }
   };
 
   return (
@@ -218,6 +232,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: '#212121',
+    // color: '#fff',
   },
   place: {
     paddingBottom: 16,
