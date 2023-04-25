@@ -15,10 +15,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { authSignOutUser } from '../../redux/auth/authOperations';
 
-export default function ProfileScreen({ navigation }) {
+export default function ProfileScreen({ route, navigation }) {
   const [posts, setPosts] = useState([]);
   const { userId, photo, login } = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  console.log('route.params.profile', route.params);
+
   const getUsersPost = async () => {
     await db
       .firestore()
@@ -45,8 +47,10 @@ export default function ProfileScreen({ navigation }) {
           <View
             style={{
               position: 'absolute',
-              top: '6%',
+              top: '-6%',
               left: '35%',
+              width: 120,
+              height: 120,
             }}
           >
             <Image source={{ uri: photo }} style={styles.avatar} />
@@ -90,7 +94,7 @@ export default function ProfileScreen({ navigation }) {
                       }
                     >
                       <Feather name="map-pin" size={24} color="#BDBDBD" />
-                      <Text style={styles.place}>{item.place.value}</Text>
+                      <Text style={styles.place}>{item.place}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   login: {
-    marginTop: 65,
+    marginTop: 5,
     marginBottom: 33,
     textAlign: 'center',
     fontFamily: 'Roboto-Medium',

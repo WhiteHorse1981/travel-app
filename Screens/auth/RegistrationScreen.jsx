@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import {
   StyleSheet,
@@ -85,7 +84,7 @@ export default function RegistrationScreen({ navigation }) {
                 style={{
                   position: 'absolute',
                   bottom: 520,
-                  right: 125,
+                  right: 140,
                   width: 24,
                   height: 24,
                   backgroundColor: '#ffffff',
@@ -103,7 +102,7 @@ export default function RegistrationScreen({ navigation }) {
                 style={{
                   position: 'absolute',
                   bottom: 520,
-                  right: 125,
+                  right: 140,
                   backgroundColor: '#ffffff',
                   borderRadius: 50,
                 }}
