@@ -27,19 +27,21 @@ export default function CreatePostsScreen({ navigation }) {
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState(null);
   const [place, setPlace] = useState('');
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const { userId, login } = useSelector(state => state.auth);
 
   useEffect(() => {
     (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-
+      let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        console.log('Permission to access location was denied');
+        setErrorMsg('Permission to access location was denied');
         return;
       }
-      let locationRes = await Location.getCurrentPositionAsync({});
-      setLocation(locationRes);
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log(location);
     })();
   }, []);
 
@@ -48,26 +50,14 @@ export default function CreatePostsScreen({ navigation }) {
     setPhoto(uri);
   };
 
-  const sendData = () => {
-    if (title.trim() && place.trim()) {
-      uploadPostToServer();
-      navigation.navigate('Home');
-      setPhoto('');
-      setTitle('');
-      setPlace('');
-    } else {
-      Alert.alert('Please fill in the fields');
-    }
-  };
-
   const uploadPostToServer = async () => {
     try {
       const photo = await uploadPhotoToServer();
       const createPost = await db.firestore().collection('posts').add({
         photo,
         title,
-        location,
-        // location: location?.coords,
+        // location,
+        location: location.coords,
         place,
         userId,
         login,
@@ -98,6 +88,18 @@ export default function CreatePostsScreen({ navigation }) {
     }
   };
 
+  const sendData = () => {
+    uploadPostToServer();
+    if (title.trim() && place.trim()) {
+      navigation.navigate('Home');
+      setPhoto('');
+      setTitle('');
+      setPlace('');
+    } else {
+      Alert.alert('Please fill in the fields');
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -114,9 +116,7 @@ export default function CreatePostsScreen({ navigation }) {
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                onPress={() => {
-                  setPhoto('');
-                }}
+                onPress={takePhoto}
                 style={{
                   width: 60,
                   height: 60,
