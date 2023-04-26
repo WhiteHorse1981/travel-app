@@ -61,7 +61,7 @@ export default function Home({ route, navigation }) {
                   style={{ flexDirection: 'row' }}
                   onPress={() =>
                     navigation.navigate('Map', {
-                      location: item.location,
+                      location: item?.location,
                     })
                   }
                 >

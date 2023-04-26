@@ -59,7 +59,24 @@ export default function PostsScreen({ navigation }) {
           ),
         }}
       />
-      <NestedScreen.Screen name="Map" component={MapScreen} options={{ title: 'Location' }} />
+      <NestedScreen.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          title: 'Location',
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <TouchableOpacity
+              style={{ marginLeft: 16 }}
+              onPress={() => {
+                navigation.navigate('Home');
+              }}
+            >
+              <AntDesign name="arrowleft" size={24} color="rgba(33, 33, 33, 0.8)" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </NestedScreen.Navigator>
   );
 }

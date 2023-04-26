@@ -27,7 +27,8 @@ export default function CreatePostsScreen({ navigation }) {
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState(null);
   const [place, setPlace] = useState('');
-  const [errorMsg, setErrorMsg] = useState(null);
+
+  console.log('location', location);
 
   const { userId, login } = useSelector(state => state.auth);
 
@@ -35,17 +36,18 @@ export default function CreatePostsScreen({ navigation }) {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        console.log('Permission to access location was denied');
         return;
       }
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log(location);
+      console.log('locationuseEffect', location);
     })();
   }, []);
 
   const takePhoto = async () => {
+    console.log('locationtakePhoto', location);
     const { uri } = await camera.takePictureAsync();
     setPhoto(uri);
   };
@@ -57,7 +59,7 @@ export default function CreatePostsScreen({ navigation }) {
         photo,
         title,
         // location,
-        location: location.coords,
+        location: location?.coords,
         place,
         userId,
         login,
