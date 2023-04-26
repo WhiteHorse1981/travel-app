@@ -14,8 +14,7 @@ import {
 } from 'react-native';
 
 import { Camera, CameraType } from 'expo-camera';
-import { FontAwesome } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import { FontAwesome, Feather } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import db from '../../firebase/config';
 import { nanoid } from 'nanoid';
