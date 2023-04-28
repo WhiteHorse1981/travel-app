@@ -84,7 +84,7 @@ export default function RegistrationScreen({ navigation }) {
                 style={{
                   position: 'absolute',
                   bottom: 520,
-                  right: 140,
+                  right: 125,
                   width: 24,
                   height: 24,
                   backgroundColor: '#ffffff',
@@ -102,7 +102,7 @@ export default function RegistrationScreen({ navigation }) {
                 style={{
                   position: 'absolute',
                   bottom: 520,
-                  right: 140,
+                  right: 125,
                   backgroundColor: '#ffffff',
                   borderRadius: 50,
                 }}

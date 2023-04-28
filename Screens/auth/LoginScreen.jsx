@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   showPassword: {
     position: 'absolute',
-    top: 32,
+    top: 36,
     right: 32,
     color: '#1B4371',
     fontFamily: 'Roboto-Regular',

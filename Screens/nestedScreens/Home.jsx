@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 11,
     lineHeight: 13,
-
     color: 'rgba(33, 33, 33, 0.8)  ',
   },
   img: {

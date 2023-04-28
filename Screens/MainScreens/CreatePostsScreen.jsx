@@ -51,23 +51,6 @@ export default function CreatePostsScreen({ navigation }) {
     setPhoto(uri);
   };
 
-  const uploadPostToServer = async () => {
-    try {
-      const photo = await uploadPhotoToServer();
-      const createPost = await db.firestore().collection('posts').add({
-        photo,
-        title,
-        // location,
-        location: location?.coords,
-        place,
-        userId,
-        login,
-      });
-    } catch (error) {
-      console.log('error', error.message);
-    }
-  };
-
   const uploadPhotoToServer = async () => {
     try {
       const response = await fetch(photo);
@@ -84,6 +67,23 @@ export default function CreatePostsScreen({ navigation }) {
         .getDownloadURL();
 
       return processedPhoto;
+    } catch (error) {
+      console.log('error', error.message);
+    }
+  };
+
+  const uploadPostToServer = async () => {
+    try {
+      const photo = await uploadPhotoToServer();
+      const createPost = await db.firestore().collection('posts').add({
+        photo,
+        title,
+        location,
+        // location: location?.coords,
+        place,
+        userId,
+        login,
+      });
     } catch (error) {
       console.log('error', error.message);
     }
